@@ -1,0 +1,103 @@
+backend:
+  name: git-gateway
+  branch: master # Branch to update (optional; defaults to master)
+# This line should *not* be indented
+publish_mode: editorial_workflow
+# These lines should *not* be indented
+media_folder: "static/images/uploads" # Media files will be stored in the repo under static/images/uploads
+public_folder: "/images/uploads" # The src attribute for uploaded media will begin with /images/uploads
+collections:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Blog" # Used in the UI
+    folder: "_posts/blog" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "thumbnail", widget: "image"}
+      - {label: "Rating (scale of 1-5)", name: "rating", widget: "number"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Draft", name: "draft", widget: "boolean", default: true}
+      - label: "Post Author"
+        name: "author"
+        widget: "relation"
+        collection: "authors"
+        search_fields: ["name.first", "twitterHandle"]
+        value_field: "name.first"
+        display_fields: ["twitterHandle", "followerCount"]
+      - label: 'Code'
+        name: 'code'
+        widget: 'code'
+      - { label: 'Color', name: 'color', widget: 'color' }
+      - label: 'Birthdate'
+        name: 'birthdate'
+        widget: 'date'
+        default: ''
+        format: 'MMM Do YY'
+      - label: "Start time"
+        name: "start"
+        widget: "datetime"
+        default: ""
+        date_format: "DD.MM.YYYY" # e.g. 24.12.2021
+        time_format: "HH:mm" # e.g. 21:07
+        format: "LLL"
+        picker_utc: false
+      - label: "Manual PDF"
+        name: "manual_pdf"
+        widget: "file"
+        default: "/uploads/general-manual.pdf"
+        media_library:
+          config:
+            multiple: true
+      - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
+      - label: "Featured Image"
+        name: "thumbnail"
+        widget: "image"
+        choose_url: true
+        default: "/uploads/chocolate-dogecoin.jpg"
+        media_library:
+          config:
+            multiple: true
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        allow_add: false
+        default: ["news"]
+      - {label: "Location", name: "location", widget: "map" }
+      - { label: 'Blog post content', name: 'body', widget: 'markdown' }
+      - label: "Puppy Count"
+        name: "puppies"
+        widget: "number"
+        default: 2
+        value_type: "int"
+        min: 1
+        max: 101
+        step: 2
+      - label: "Profile"
+        name: "profile"
+        widget: "object"
+        summary: '{{fields.name}}: {{fields.birthdate}}'
+        fields:
+          - {label: "Public", name: "public", widget: "boolean", default: true}
+          - {label: "Name", name: "name", widget: "string"}
+          - label: "Birthdate"
+            name: "birthdate"
+            widget: "date"
+            default: ""
+            format: "MM/DD/YYYY"
+          - label: "Address"
+            name: "address"
+            widget: "object"
+            collapsed: true
+            fields: 
+              - {label: "Street Address", name: "street", widget: "string"}
+              - {label: "City", name: "city", widget: "string"}
+              - {label: "Postal Code", name: "post-code", widget: "string"}
+      - label: "Align Content"
+        name: "align"
+        widget: "select"
+        options: ["left", "center", "right"]
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
